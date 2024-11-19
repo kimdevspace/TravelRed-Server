@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	// Spring Boot 3.x에서는 javax.servlet 대신 jakarta.servlet을 사용
 	implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'

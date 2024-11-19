@@ -3,6 +3,7 @@ package com.ssafy.enjoytrip.global.security;
 import java.util.Base64;
 import java.util.Date;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 
 import com.ssafy.enjoytrip.domain.member.entity.RoleType;
@@ -32,20 +33,21 @@ public class JwtTokenProvider {
     private final UserDetailsService userDetailsService;
 
     // 객체 초기화, secretKey를 Base64로 인코딩
+    @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
     // JWT 토큰 생성
     public String createToken(String userPK, RoleType roles) {
-        Claims claims = Jwts.claims().setSubject(userPK); // JWT payload에 저장되는 정보 단위
-        claims.put("roles", roles); // 정보 저장 (key-value)
+        Claims claims = Jwts.claims().setSubject(userPK);
+        claims.put("roles", "ROLE_" + roles.name());  // "ROLE_" prefix 추가
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
-                .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과 signature에 들어갈 secret 값 세팅
+                .setExpiration(new Date(now.getTime() + tokenValidTime))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 

@@ -1,15 +1,9 @@
 package com.ssafy.enjoytrip.domain.member.controller;
 
-import com.ssafy.enjoytrip.domain.member.entity.Member;
-import com.ssafy.enjoytrip.domain.member.entity.RoleType;
-import com.ssafy.enjoytrip.domain.member.repository.MemberRepository;
-import com.ssafy.enjoytrip.global.security.JwtTokenProvider;
+import com.ssafy.enjoytrip.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -18,32 +12,43 @@ import java.util.Map;
 @RequestMapping("/api/v1/member")
 public class MemberController {
 
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     // 회원가입
     @PostMapping("/create")
-    public Long register(@RequestBody Map<String, String> user) {
-        return memberRepository.save(Member.builder()
-                .memberEmail(user.get("memberEmail"))
-                .memberPwd(passwordEncoder.encode(user.get("memberPwd")))
-                .memberName(user.get("memberName"))
-                .nickname(user.get("nickname"))
-                .roleType(RoleType.USER)
-                .build()).getId();
+    public ResponseEntity<?> create(@RequestBody Map<String, String> user) {
+        try {
+            Long memberId = memberService.createMember(user);
+            return ResponseEntity.ok(memberId);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();  // 에러 스택 트레이스 출력
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
     }
 
     // 로그인
     @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> user) {
-        Member member = memberRepository.findByMemberEmail(user.get("memberEmail"))
-                .orElseThrow(() -> new IllegalArgumentException("가입 되지 않은 이메일입니다."));
-        if (!passwordEncoder.matches(user.get("memberPwd"), member.getMemberPwd())) {
-            throw new IllegalArgumentException("이메일 또는 비밀번호가 맞지 않습니다.");
+    public ResponseEntity<String> login(@RequestBody Map<String, String> user) {
+        try {
+            String token = memberService.login(user);
+            return ResponseEntity.ok(token);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
 
-        return jwtTokenProvider.createToken(member.getMemberEmail(), member.getRoleType());
+    // 회원가입 시 이메일 인증
+    @GetMapping("/verify/{memberEmail}")
+    public ResponseEntity<String> verifyEmail(@PathVariable String memberEmail) {
+        boolean verified = memberService.verifyEmail(memberEmail);
+
+        if (verified) {
+            return ResponseEntity.ok("이메일이 성공적으로 인증되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("이메일 인증에 실패했습니다.");
+        }
     }
 
 }

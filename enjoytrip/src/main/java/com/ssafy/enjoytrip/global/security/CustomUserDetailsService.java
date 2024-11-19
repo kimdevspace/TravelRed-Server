@@ -1,7 +1,7 @@
 package com.ssafy.enjoytrip.global.security;
 
 import com.ssafy.enjoytrip.domain.member.entity.Member;
-import com.ssafy.enjoytrip.domain.member.repository.MemberRepository;
+import com.ssafy.enjoytrip.domain.member.entity.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

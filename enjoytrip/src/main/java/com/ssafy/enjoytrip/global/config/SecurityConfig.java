@@ -38,17 +38,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .httpBasic(httpBasic -> httpBasic.disable()) // 기본 인증 비활성화
-                .csrf(csrf -> csrf.disable()) // CSRF 비활성화
+                .httpBasic(httpBasic -> httpBasic.disable())
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성화
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자만 접근
-                        .requestMatchers("/api/v1/", "/api/v1/member/login", "/api/v1/member/create").permitAll()    // 누구나 접근 가능
-                        .anyRequest().authenticated() // 나머지 요청 인증 필요
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers(
+                                "/api/v1/",
+                                "/api/v1/member/login",
+                                "/api/v1/member/create",
+                                "/api/v1/member/verify/**"
+                        ).permitAll()
+                        .requestMatchers("/api/v1/**").hasRole("USER")  // USER 권한 명시
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-                        UsernamePasswordAuthenticationFilter.class); // 필터 추가
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
