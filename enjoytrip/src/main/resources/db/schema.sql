@@ -71,3 +71,24 @@ CREATE TABLE `review_images` (
                                  PRIMARY KEY (`image`, `review_id`),
                                  FOREIGN KEY (`review_id`) REFERENCES `reviews` (`review_id`) ON DELETE CASCADE
 );
+
+CREATE TABLE `notice` (
+                          `notice_id` BIGINT(11) NOT NULL AUTO_INCREMENT,
+                          `notice_title` VARCHAR(255) NULL,
+                          `notice_content` VARCHAR(255) NULL,
+                          `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+                          CONSTRAINT `PK_NOTICE` PRIMARY KEY (`notice_id`)
+);
+
+CREATE TABLE `chat_bot` (
+                            `bot_id` BIGINT(11) NOT NULL AUTO_INCREMENT,
+                            `member_id` BIGINT(11) NOT NULL,
+                            `user_request` VARCHAR(500) NULL,
+                            `bot_response` TEXT NULL,
+                            CONSTRAINT `PK_CHAT_BOT` PRIMARY KEY (`bot_id`),
+                            CONSTRAINT `FK_MEMBER_TO_CHAT_BOT` FOREIGN KEY (`member_id`)
+                                REFERENCES `members` (`member_id`)
+                                ON DELETE CASCADE
+                                ON UPDATE CASCADE,
+                            INDEX `IX_MEMBER_ID` (`member_id`)  /* 외래키 검색 성능 향상을 위한 인덱스 추가 */
+);
