@@ -34,12 +34,12 @@ public class Member {
 
     private String profileImage;
 
-    @ManyToOne
-    @JoinColumn(name = "city_code", referencedColumnName = "city_code", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_code", nullable = true)
     private City city;
 
-    @ManyToOne
-    @JoinColumn(name = "town_code", referencedColumnName = "town_code", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "town_code", nullable = true)
     private Town town;    // 다른 테이블에서 가져오는 것
 
     @NotNull

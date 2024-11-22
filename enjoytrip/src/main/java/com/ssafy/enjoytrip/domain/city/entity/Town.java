@@ -14,7 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(name = "city")
+@Table(name = "town")
 public class Town {
     @Id
     @Column(name = "town_code")
