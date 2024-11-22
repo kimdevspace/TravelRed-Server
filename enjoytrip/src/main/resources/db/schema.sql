@@ -41,7 +41,7 @@ CREATE TABLE `reviews` (
                            `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
                            `updated_at` DATETIME NOT NULL,
                            `like_count` INT DEFAULT 0,
-                           `review_rating` ENUM('1', '2', '3', '4', '5'),
+                           `review_rating` INT,
                            PRIMARY KEY (`review_id`),
                            FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`) ON DELETE CASCADE
 );
