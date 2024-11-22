@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.domain.tour.entity;
 
+import com.ssafy.enjoytrip.domain.city.entity.City;
 import com.ssafy.enjoytrip.domain.city.entity.Town;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -22,11 +23,12 @@ public class Tour {
     private Long id;
 
     @NotNull
-    private String tourName;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     private ContentType contentType;  // 이 필드의 getDescription()으로 한글 이름 접근 가능
+
+    @NotNull
+    private String tourName;
+
 
     @NotNull
     private String address;
@@ -34,6 +36,10 @@ public class Tour {
     private String zipCode;
 
     private String backgroundImage;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_code")
+    private City city;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "town_code")
@@ -46,13 +52,14 @@ public class Tour {
     private TourDetail tourDetail;
 
     @Builder
-    public Tour(String tourName, ContentType contentType, String address, String zipCode,
-                String backgroundImage, Town town, Integer hit) {
-        this.tourName = tourName;
+    public Tour(ContentType contentType, String tourName, String address, String zipCode,
+                String backgroundImage, City city, Town town, Integer hit) {
         this.contentType = contentType;
+        this.tourName = tourName;
         this.address = address;
         this.zipCode = zipCode;
         this.backgroundImage = backgroundImage;
+        this.city = city;
         this.town = town;
         this.hit = hit;
     }
