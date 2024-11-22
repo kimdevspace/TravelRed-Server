@@ -1,13 +1,13 @@
 CREATE TABLE city (
                       city_code INT NOT NULL,
-                      citiy_name VARCHAR(255) NOT NULL,
+                      city_name VARCHAR(255) NOT NULL,
                       PRIMARY KEY (city_code)
 );
 
 CREATE TABLE town (
                       town_code BIGINT(11) NOT NULL,
-                      city_code INT NOT NULL,
                       town_name VARCHAR(255) NOT NULL,
+                      city_code INT NOT NULL,
                       PRIMARY KEY (town_code, city_code),
                       FOREIGN KEY (city_code) REFERENCES city (city_code)
 );
