@@ -22,9 +22,9 @@ public class Tour {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private ContentType contentType;  // 이 필드의 getDescription()으로 한글 이름 접근 가능
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "content_id")
+    private TourContent tourContent;
 
     @NotNull
     private String tourName;
@@ -52,9 +52,9 @@ public class Tour {
     private TourDetail tourDetail;
 
     @Builder
-    public Tour(ContentType contentType, String tourName, String address, String zipCode,
+    public Tour(TourContent tourContent, String tourName, String address, String zipCode,
                 String backgroundImage, City city, Town town, Integer hit) {
-        this.contentType = contentType;
+        this.tourContent = tourContent;
         this.tourName = tourName;
         this.address = address;
         this.zipCode = zipCode;
