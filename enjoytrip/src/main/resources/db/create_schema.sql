@@ -1,13 +1,13 @@
 use enjoytrip;
 CREATE TABLE city (
-	city_code INT NOT NULL AUTO_INCREMENT,
+	city_code INT NOT NULL,
 	city_name VARCHAR(255) NOT NULL,
 	PRIMARY KEY (city_code)
 );
 
 CREATE TABLE town
 (
-    town_code INT NOT NULL AUTO_INCREMENT,
+    town_code INT NOT NULL,
     town_name VARCHAR(30) NOT NULL,
     city_code INT NOT NULL,
     PRIMARY KEY (town_code, city_code),
