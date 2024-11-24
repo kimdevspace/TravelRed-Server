@@ -1,14 +1,15 @@
+use enjoytrip;
 CREATE TABLE city (
-	city_code INT NOT NULL,
+	city_code INT NOT NULL AUTO_INCREMENT,
 	city_name VARCHAR(255) NOT NULL,
 	PRIMARY KEY (city_code)
 );
 
 CREATE TABLE town
 (
-    town_code INT         NOT NULL,
-    town_name      VARCHAR(30) NOT NULL,
-    city_code INT         NOT NULL,
+    town_code INT NOT NULL AUTO_INCREMENT,
+    town_name VARCHAR(30) NOT NULL,
+    city_code INT NOT NULL,
     PRIMARY KEY (town_code, city_code),
     CONSTRAINT foreign_key_town_city_code FOREIGN KEY (city_code) REFERENCES city (city_code) ON DELETE CASCADE
 );
