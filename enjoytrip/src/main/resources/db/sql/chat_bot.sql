@@ -1,0 +1,2 @@
+insert into enjoytrip.chat_bot (chat_id, member_id, user_request, ai_response)
+values  (1, 1, '안녕', '<p>안녕하세요! 저는 트레블레드의 챗봇입니다. 저는 여행지, 관광지 등에 대한 정보를 제공해드리고 있습니다. 여행과 관련된 질문이나 추천을 원하시면 언제든지 말씀해주세요! (test)</p>');
