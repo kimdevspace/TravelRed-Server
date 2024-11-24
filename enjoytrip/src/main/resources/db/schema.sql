@@ -92,3 +92,61 @@ CREATE TABLE `chat_bot` (
                                 ON UPDATE CASCADE,
                             INDEX `IX_MEMBER_ID` (`member_id`)  /* 외래키 검색 성능 향상을 위한 인덱스 추가 */
 );
+
+CREATE TABLE plan (
+    plan_id BIGINT NOT NULL AUTO_INCREMENT,
+    member_id BIGINT NOT NULL,
+    city_code INT NOT NULL,
+    plan_title VARCHAR(255) NOT NULL,
+    thumbnail_image VARCHAR(255),
+    start_date DATE,
+    end_date DATE,
+    PRIMARY KEY (plan_id),
+    FOREIGN KEY (member_id) REFERENCES members (member_id),
+    FOREIGN KEY (city_code) REFERENCES city (city_code)
+);
+
+CREATE TABLE tour_content (
+    content_id BIGINT NOT NULL AUTO_INCREMENT,
+    content_name ENUM('TOURIST_SPOT', 'STAY', 'RESTAURANT', 'CULTURE', 'SHOW', 'TRAVEL', 'SHOPPING', 'LEISURE') NOT NULL,
+    kor_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (content_id)
+);
+
+CREATE TABLE tour (
+    tour_id BIGINT NOT NULL AUTO_INCREMENT,
+    content_id BIGINT,
+    tour_name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    zip_code VARCHAR(255),
+    background_image VARCHAR(255),
+    city_code INT,
+    town_code BIGINT,
+    hit INT DEFAULT 0,
+    PRIMARY KEY (tour_id),
+    FOREIGN KEY (content_id) REFERENCES tour_content (content_id),
+    FOREIGN KEY (city_code) REFERENCES city (city_code),
+    FOREIGN KEY (town_code) REFERENCES town (town_code)
+);
+
+CREATE TABLE tour_detail (
+    tour_id BIGINT NOT NULL,
+    city_code VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    telephone VARCHAR(255),
+    latitude DECIMAL(11,8),
+    longitude DECIMAL(11,8),
+    PRIMARY KEY (tour_id),
+    FOREIGN KEY (tour_id) REFERENCES tour (tour_id)
+);
+
+CREATE TABLE plan_trip (
+    plan_trip_id BIGINT NOT NULL AUTO_INCREMENT,
+    plan_id BIGINT NOT NULL,
+    tour_id BIGINT NOT NULL,
+    day INT,
+    `order` INT,
+    PRIMARY KEY (plan_trip_id),
+    FOREIGN KEY (plan_id) REFERENCES plan (plan_id),
+    FOREIGN KEY (tour_id) REFERENCES tour (tour_id)
+);
