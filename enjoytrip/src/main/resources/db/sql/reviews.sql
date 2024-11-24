@@ -1,0 +1,2 @@
+insert into enjoytrip.reviews (review_id, review_title, review_content, member_id, tour_id, review_image, created_at, like_count, rating, updated_at)
+values (1, '테스트 리뷰 제목입니다.', '테스트 리뷰내 내용입니다', 1, 125429, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRXLN909U-WjrX5gHQtMVP33VBR5_gq23N8Q&s', '2024-11-22 17:02:31', 100, 5, '2024-11-23 17:20:31');
