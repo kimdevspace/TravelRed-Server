@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -19,6 +21,11 @@ public class ReviewAdminService {
     public Page<ReviewAdminResponseDto> getAllReviews(Pageable pageable) {
         return reviewRepository.findAll(pageable)
                 .map(this::convertToAdminDto);
+    }
+
+    @Transactional
+    public void deleteReviews(List<Long> reviewIds) {
+        reviewRepository.deleteAllByReviewIdIn(reviewIds);
     }
 
     private ReviewAdminResponseDto convertToAdminDto(Review review) {

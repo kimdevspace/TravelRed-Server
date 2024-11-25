@@ -30,4 +30,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Integer findLikeCountByReviewId(@Param("reviewId") Long reviewId);
 
     void deleteAllByReviewIdIn(List<Long> ids);
+
+    Long countByMemberId(Long memberId);  // 추가
 }
