@@ -38,7 +38,7 @@ public class Member {
     private String profileImage;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_code", nullable = true)
+    @JoinColumn(name = "city_code", insertable = false, updatable = false)
     @OnDelete(action = OnDeleteAction.SET_NULL) // 삭제되면 null로 변경
     private City city;
 
@@ -80,7 +80,6 @@ public class Member {
             String memberPwd,
             String nickname,
             String profileImage,
-            City city,
             Town town,
             ProviderType providerType,
             RoleType roleType,
@@ -92,7 +91,7 @@ public class Member {
         this.memberPwd = memberPwd;
         this.nickname = nickname;
         this.profileImage = profileImage;
-        this.city = city;
+        this.city = town != null ? town.getCity() : null;
         this.town = town;
         this.providerType = (providerType != null ? providerType : ProviderType.LOCAL); // 기본값 설정
         this.roleType = (roleType != null ? roleType : RoleType.USER); // 기본값 설정

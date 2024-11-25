@@ -37,7 +37,7 @@ public class Tour {
     private String backgroundImage;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "city_code")
+    @JoinColumn(name = "city_code", insertable = false, updatable = false)
     private City city;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -54,13 +54,13 @@ public class Tour {
 
     @Builder
     public Tour(TourContent tourContent, String tourName, String address, String zipCode,
-                String backgroundImage, City city, Town town) {
+                String backgroundImage, Town town) {
         this.tourContent = tourContent;
         this.tourName = tourName;
         this.address = address;
         this.zipCode = zipCode;
         this.backgroundImage = backgroundImage;
-        this.city = city;
+        this.city = town.getCity();
         this.town = town;
         this.hit = 0;
     }
