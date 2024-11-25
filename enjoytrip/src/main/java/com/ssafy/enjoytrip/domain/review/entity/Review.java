@@ -50,7 +50,7 @@ public class Review {
 
     private Integer likeCount;
 
-    private Integer reviewRating;  // 1~5 사이의 정수값
+    private Integer rating;  // 1~5 사이의 정수값
 
     @LastModifiedDate
     @NotNull
@@ -58,7 +58,7 @@ public class Review {
 
     @PrePersist
     public void validateRating() {
-        if (reviewRating != null && (reviewRating < 1 || reviewRating > 5)) {
+        if (rating != null && (rating < 1 || rating > 5)) {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
         }
     }
@@ -73,7 +73,7 @@ public class Review {
         this.reviewImage = reviewImage;
         this.createdAt = LocalDateTime.now();
         this.likeCount = likeCount;
-        this.reviewRating = reviewRating;
+        this.rating = rating;
         this.updatedAt = createdAt;
     }
 }
