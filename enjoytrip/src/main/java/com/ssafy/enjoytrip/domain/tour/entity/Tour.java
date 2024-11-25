@@ -2,12 +2,16 @@ package com.ssafy.enjoytrip.domain.tour.entity;
 
 import com.ssafy.enjoytrip.domain.city.entity.City;
 import com.ssafy.enjoytrip.domain.city.entity.Town;
+import com.ssafy.enjoytrip.domain.review.entity.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -51,6 +55,9 @@ public class Tour {
 
     @OneToOne(mappedBy = "tour", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private TourDetail tourDetail;
+
+    @OneToMany(mappedBy = "reviews")
+    private List<Review> reviews = new ArrayList<>();
 
     @Builder
     public Tour(TourContent tourContent, String tourName, String address, String zipCode,
