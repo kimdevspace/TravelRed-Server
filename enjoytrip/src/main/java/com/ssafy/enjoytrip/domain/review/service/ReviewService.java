@@ -58,6 +58,7 @@ public class ReviewService {
                     .reviewId(review.getReviewId())
                     .nickname(review.getMember().getNickname())
                     .profile_image(review.getMember().getProfileImage())
+                    .memberId(review.getMember().getId())
                     .images(review.getReviewImage())
                     .reviewTitle(review.getReviewTitle())
                     .reviewContent(review.getReviewContent())
@@ -73,4 +74,6 @@ public class ReviewService {
 
         return reviewResponseDto;
     }
+
+
 }

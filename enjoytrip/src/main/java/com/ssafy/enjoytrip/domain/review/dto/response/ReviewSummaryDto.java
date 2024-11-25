@@ -17,6 +17,7 @@ public class ReviewSummaryDto {
     private Long reviewId;
     private String nickname;
     private String profile_image;
+    private Long memberId;
     private String images;
     private String reviewTitle;
     private String reviewContent;
