@@ -3,11 +3,14 @@ package com.ssafy.enjoytrip.domain.plan.controller;
 import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.plan.dto.request.CreatePlanRequest;
 import com.ssafy.enjoytrip.domain.plan.service.PlanService;
+import com.ssafy.enjoytrip.global.security.SecurityUser;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,13 +27,17 @@ public class PlanController {
     /**
      * 여행 계획 생성
      *
-     * @param member 현재 인증된 회원 정보
      * @param request 여행 계획 생성 요청 정보
      * @return 생성된 여행 계획 ID
      */
 
     @PostMapping
-    public ResponseEntity<Long> createPlan (@AuthenticationPrincipal Member member, @RequestBody CreatePlanRequest request) {
+    public ResponseEntity<Long> createPlan (@RequestBody CreatePlanRequest request) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        Member member = securityUser.getMember();
+
         try {
             Long planId = planService.createPlan(member, request);
             return ResponseEntity.created(
