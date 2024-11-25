@@ -27,7 +27,7 @@ public class PlanController {
     private final PlanService planService;
 
     /**
-     * 여행 계획 생성을 위한 도시 정보 조회
+     * 여행 계획 생성을 위한 도시 정보조회
      */
     @GetMapping
     public ResponseEntity<List<CityInfoResponse>> getCitiesForPlanning() {
