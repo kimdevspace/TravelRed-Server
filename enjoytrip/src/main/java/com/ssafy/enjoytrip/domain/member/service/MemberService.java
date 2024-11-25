@@ -62,6 +62,7 @@ public class MemberService {
                     .roleType(RoleType.USER)
                     .providerType(ProviderType.LOCAL)
                     .isEmailVerified(false)
+                    .isLocked(false)
                     .build();
 
             Member savedMember = memberRepository.save(newMember);
