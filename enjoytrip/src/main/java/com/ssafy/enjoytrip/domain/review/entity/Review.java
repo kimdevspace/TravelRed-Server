@@ -76,4 +76,23 @@ public class Review {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = createdAt;
     }
+
+    public void updateReviewTitle(String reviewTitle) {
+        this.reviewTitle = reviewTitle;
+    }
+
+    public void updateReviewContent(String reviewContent) {
+        this.reviewContent = reviewContent;
+    }
+
+    public void updateRating(Integer rating) {
+        if (rating != null && (rating < 1 || rating > 5)) {
+            throw new IllegalArgumentException("Rating must be between 1 and 5");
+        }
+        this.rating = rating;
+    }
+
+    public void updateReviewImage(String reviewImage) {
+        this.reviewImage = reviewImage;
+    }
 }

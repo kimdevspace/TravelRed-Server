@@ -1,6 +1,8 @@
 package com.ssafy.enjoytrip.domain.review.controller;
 
 import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewRequestDto;
+import com.ssafy.enjoytrip.domain.review.dto.request.UpdateReviewRequestDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.CreateReviewResponseDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.ReviewDetailResponseDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.ReviewResponseDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.ReviewSummaryDto;
@@ -18,7 +20,13 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<?> createReview(@RequestBody CreateReviewRequestDto reviewRequestDto) {
-        CreateReviewRequestDto result = reviewService.saveReview(reviewRequestDto);
+        CreateReviewResponseDto result = reviewService.saveReview(reviewRequestDto);
+        return ResponseEntity.ok(result);
+    }
+
+    @PatchMapping("/{reviewId}")
+    public ResponseEntity<?> updateReview(@PathVariable Long reviewId, @RequestBody UpdateReviewRequestDto updateRequestDto) {
+        CreateReviewResponseDto result = reviewService.updateReview(reviewId, updateRequestDto);
         return ResponseEntity.ok(result);
     }
 

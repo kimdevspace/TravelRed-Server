@@ -3,6 +3,7 @@ package com.ssafy.enjoytrip.domain.review.service;
 import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.member.entity.repository.MemberRepository;
 import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewRequestDto;
+import com.ssafy.enjoytrip.domain.review.dto.request.UpdateReviewRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.*;
 import com.ssafy.enjoytrip.domain.review.entity.Review;
 import com.ssafy.enjoytrip.domain.review.entity.ReviewComment;
@@ -10,6 +11,7 @@ import com.ssafy.enjoytrip.domain.review.entity.repository.ReviewCommentReposito
 import com.ssafy.enjoytrip.domain.review.entity.repository.ReviewRepository;
 import com.ssafy.enjoytrip.domain.tour.entity.Tour;
 import com.ssafy.enjoytrip.domain.tour.entity.repository.TourRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class ReviewService {
         return reviewRepository.findTopReviewsOrderByRating(PageRequest.of(0, 20));
     }
 
-    public CreateReviewRequestDto saveReview(CreateReviewRequestDto reviewRequestDto) {
+    public CreateReviewResponseDto saveReview(CreateReviewRequestDto reviewRequestDto) {
         Tour tour = tourRepository.findTourById(reviewRequestDto.getTourId());
         Member member = memberRepository.findMemberById(reviewRequestDto.getMemberId());
 
@@ -46,7 +48,17 @@ public class ReviewService {
 
         reviewRepository.save(review);
 
-        return reviewRequestDto;
+        return CreateReviewResponseDto.builder()
+                .reviewId(review.getReviewId())
+                .reviewTitle(review.getReviewTitle())
+                .reviewContent(review.getReviewContent())
+                .rating(review.getRating())
+                .reviewImage(review.getReviewImage())
+                .updatedAt(review.getCreatedAt())
+                .memberName(member.getMemberName())
+                .memberId(member.getId())
+                .tourId(tour.getId())
+                .build();
 
     }
 
@@ -97,6 +109,39 @@ public class ReviewService {
                 .build();
 
         return detailResponseDto;
+    }
+
+    public CreateReviewResponseDto updateReview(Long reviewId, UpdateReviewRequestDto updateRequestDto) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new EntityNotFoundException("Review not found with id: " + reviewId));
+
+        // 리뷰 정보 업데이트
+        if (updateRequestDto.getReviewTitle() != null) {
+            review.updateReviewTitle(updateRequestDto.getReviewTitle());
+        }
+        if (updateRequestDto.getReviewContent() != null) {
+            review.updateReviewContent(updateRequestDto.getReviewContent());
+        }
+        if (updateRequestDto.getRating() != null) {
+            review.updateRating(updateRequestDto.getRating());
+        }
+        if (updateRequestDto.getReviewImage() != null) {
+            review.updateReviewImage(updateRequestDto.getReviewImage());
+        }
+
+        Review updatedReview = reviewRepository.save(review);
+
+        return CreateReviewResponseDto.builder()
+                .reviewId(updatedReview.getReviewId())
+                .reviewTitle(updatedReview.getReviewTitle())
+                .reviewContent(updatedReview.getReviewContent())
+                .rating(updatedReview.getRating())
+                .reviewImage(updatedReview.getReviewImage())
+                .updatedAt(updatedReview.getUpdatedAt())
+                .memberName(updateRequestDto.getMemberName())
+                .memberId(updateRequestDto.getMemberId())
+                .tourId(updateRequestDto.getTourId())
+                .build();
     }
 
 }
