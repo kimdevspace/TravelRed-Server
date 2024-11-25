@@ -14,11 +14,16 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("SELECT new com.ssafy.enjoytrip.domain.review.dto.response.HomeReviewResponseDto(" +
-            "r.reviewId, r.reviewTitle, r.reviewContent, r.tourId, " +
-            "r.likeCount, r.reviewRating) " +
+            "r.reviewId, " +
+            "r.reviewTitle, " +
+            "r.reviewContent, " +
+            "r.tour.id, " +        // Tour 엔티티의 id 필드
+            "r.tour.tourName, " +  // Tour 엔티티의 tourName 필드
+            "COALESCE(r.likeCount, 0), " +
+            "COALESCE(r.rating, 0)) " +
             "FROM Review r " +
-            "WHERE r.reviewRating IS NOT NULL " +
-            "ORDER BY r.reviewRating DESC, r.likeCount DESC")
+            "ORDER BY r.rating DESC NULLS LAST, r.likeCount DESC NULLS LAST")
     List<HomeReviewResponseDto> findTopReviewsOrderByRating(Pageable pageable);
+
 
 }
