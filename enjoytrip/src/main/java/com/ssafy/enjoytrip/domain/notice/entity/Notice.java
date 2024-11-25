@@ -36,4 +36,13 @@ public class Notice {
         this.content = content;
         this.createdAt = LocalDateTime.now();
     }
+
+    public void update(String title, String content) {
+        if (title != null) {
+            this.title = title;
+        }
+        if (content != null) {
+            this.content = content;
+        }
+    }
 }
