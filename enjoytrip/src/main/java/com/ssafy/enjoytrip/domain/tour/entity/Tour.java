@@ -56,7 +56,7 @@ public class Tour {
     @OneToOne(mappedBy = "tour", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private TourDetail tourDetail;
 
-    @OneToMany(mappedBy = "reviews")
+    @OneToMany(mappedBy = "tour")
     private List<Review> reviews = new ArrayList<>();
 
     @Builder
