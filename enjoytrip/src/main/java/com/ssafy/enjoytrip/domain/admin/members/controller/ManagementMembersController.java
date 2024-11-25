@@ -7,9 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/admin/members")
@@ -22,5 +20,14 @@ public class ManagementMembersController {
     @GetMapping
     public ResponseEntity<Page<MemberAdminResponseDto>> getMembers(Pageable pageable) {
         return ResponseEntity.ok(managementMemberService.getMembers(pageable));
+    }
+
+    /**
+     * 회원 활성화/비활성화
+     * @PathVariable memberEmail
+     */
+    @PatchMapping("/{memberEmail}/toggle-lock")
+    public ResponseEntity<MemberAdminResponseDto> toggleMemberLock(@PathVariable String memberEmail) {
+        return ResponseEntity.ok(managementMemberService.toggleMemberLock(memberEmail));
     }
 }
