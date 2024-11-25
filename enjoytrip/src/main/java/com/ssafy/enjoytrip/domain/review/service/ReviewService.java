@@ -4,6 +4,8 @@ import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.member.entity.repository.MemberRepository;
 import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.HomeReviewResponseDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.ReviewResponseDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.ReviewSummaryDto;
 import com.ssafy.enjoytrip.domain.review.entity.Review;
 import com.ssafy.enjoytrip.domain.review.entity.repository.ReviewRepository;
 import com.ssafy.enjoytrip.domain.tour.entity.Tour;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional
@@ -44,5 +47,30 @@ public class ReviewService {
 
         return reviewRequestDto;
 
+    }
+
+    public ReviewResponseDto getReview(Long tourId) {
+        Tour tour = tourRepository.findTourById(tourId);
+        List<ReviewSummaryDto> list = new ArrayList<>();
+
+        for (Review review : tour.getReviews()) {
+            ReviewSummaryDto summaryDto = ReviewSummaryDto.builder()
+                    .reviewId(review.getReviewId())
+                    .nickname(review.getMember().getNickname())
+                    .profile_image(review.getMember().getProfileImage())
+                    .images(review.getReviewImage())
+                    .reviewTitle(review.getReviewTitle())
+                    .reviewContent(review.getReviewContent())
+                    .build();
+            list.add(summaryDto);
+        }
+
+        ReviewResponseDto reviewResponseDto = ReviewResponseDto.builder()
+                        .tourId(tourId)
+                        .description(tour.getTourDetail().getDescription())
+                        .reviews(list)
+                        .build();
+
+        return reviewResponseDto;
     }
 }
