@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.domain.review.controller;
 
 import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewRequestDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.ReviewDetailResponseDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.ReviewResponseDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.ReviewSummaryDto;
 import com.ssafy.enjoytrip.domain.review.service.ReviewService;
@@ -32,6 +33,10 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponseDto);
     }
 
-
+    @GetMapping("/detail/{reviewId}")
+    public ResponseEntity<?> getReviewDetail(@PathVariable Long reviewId) {
+        ReviewDetailResponseDto reviewDetailResponseDto = reviewService.getReviewDetail(reviewId);
+        return ResponseEntity.ok(reviewDetailResponseDto);
+    }
 
 }

@@ -3,11 +3,10 @@ package com.ssafy.enjoytrip.domain.review.service;
 import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.member.entity.repository.MemberRepository;
 import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewRequestDto;
-import com.ssafy.enjoytrip.domain.review.dto.response.HomeReviewResponseDto;
-import com.ssafy.enjoytrip.domain.review.dto.response.ReviewDetailResponseDto;
-import com.ssafy.enjoytrip.domain.review.dto.response.ReviewResponseDto;
-import com.ssafy.enjoytrip.domain.review.dto.response.ReviewSummaryDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.*;
 import com.ssafy.enjoytrip.domain.review.entity.Review;
+import com.ssafy.enjoytrip.domain.review.entity.ReviewComment;
+import com.ssafy.enjoytrip.domain.review.entity.repository.ReviewCommentRepository;
 import com.ssafy.enjoytrip.domain.review.entity.repository.ReviewRepository;
 import com.ssafy.enjoytrip.domain.tour.entity.Tour;
 import com.ssafy.enjoytrip.domain.tour.entity.repository.TourRepository;
@@ -26,6 +25,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final TourRepository tourRepository;
     private final MemberRepository memberRepository;
+    private final ReviewCommentRepository reviewCommentRepository;
 
     public List<HomeReviewResponseDto> getTopRatedReviews() {
         return reviewRepository.findTopReviewsOrderByRating(PageRequest.of(0, 20));
@@ -76,5 +76,27 @@ public class ReviewService {
         return reviewResponseDto;
     }
 
+    public ReviewDetailResponseDto getReviewDetail(Long reviewId) {
+
+        List<ReviewCommentDto> comments = new ArrayList<>();
+        List<ReviewComment> reviewComments = reviewCommentRepository.findAllByReview_ReviewId(reviewId);
+
+        for (ReviewComment r : reviewComments) {
+            comments.add(ReviewCommentDto.builder()
+                    .commentId(r.getCommentId())
+                    .content(r.getContent())
+                    .memberId(r.getMember().getId())
+                    .createAt(r.getCreatedAt())
+                    .build());
+        }
+
+        ReviewDetailResponseDto detailResponseDto = ReviewDetailResponseDto.builder()
+                .commentCount(reviewCommentRepository.countByReview_ReviewId(reviewId))
+                .likeCount(reviewRepository.findLikeCountByReviewId(reviewId))
+                .comments(comments)
+                .build();
+
+        return detailResponseDto;
+    }
 
 }

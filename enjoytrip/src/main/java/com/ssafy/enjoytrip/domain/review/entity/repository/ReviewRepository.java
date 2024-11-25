@@ -25,5 +25,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "ORDER BY r.rating DESC NULLS LAST, r.likeCount DESC NULLS LAST")
     List<HomeReviewResponseDto> findTopReviewsOrderByRating(Pageable pageable);
 
-
+    Long findLikeCountByReviewId(Long reviewId);
 }
