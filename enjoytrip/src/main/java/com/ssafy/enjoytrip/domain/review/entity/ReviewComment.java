@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class ReviewComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer commentId;
+    private Long commentId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "review_id", nullable = false)
