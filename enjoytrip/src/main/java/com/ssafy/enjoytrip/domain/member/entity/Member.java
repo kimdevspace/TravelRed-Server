@@ -101,5 +101,9 @@ public class Member {
         this.updatedAt = this.createdAt;     // updatedAt 초기화
     }
 
+    public void updatePassword(String newPassword) {
+        this.memberPwd = newPassword;
+        this.updatedAt = LocalDateTime.now();  // 수정 시간도 업데이트
+    }
 
 }
