@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admin/reviews")
@@ -23,5 +23,12 @@ public class ReviewAdminController {
     @GetMapping
     public ResponseEntity<Page<ReviewAdminResponseDto>> getAllReviews(Pageable pageable) {
         return ResponseEntity.ok(reviewAdminService.getAllReviews(pageable));
+    }
+
+    //선택된 리뷰들 일괄 삭제하기
+    @DeleteMapping
+    public ResponseEntity<Void> deleteReviews(@RequestBody List<Long> reviewIds) {
+        reviewAdminService.deleteReviews(reviewIds);
+        return ResponseEntity.ok().build();
     }
 }
