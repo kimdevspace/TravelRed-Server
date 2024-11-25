@@ -4,6 +4,7 @@ import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.member.entity.repository.MemberRepository;
 import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.HomeReviewResponseDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.ReviewDetailResponseDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.ReviewResponseDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.ReviewSummaryDto;
 import com.ssafy.enjoytrip.domain.review.entity.Review;
