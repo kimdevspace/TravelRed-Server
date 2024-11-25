@@ -4,6 +4,7 @@ import com.ssafy.enjoytrip.domain.review.dto.response.HomeReviewResponseDto;
 import com.ssafy.enjoytrip.domain.review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.domain.Pageable;
@@ -25,5 +26,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "ORDER BY r.rating DESC NULLS LAST, r.likeCount DESC NULLS LAST")
     List<HomeReviewResponseDto> findTopReviewsOrderByRating(Pageable pageable);
 
-    Long findLikeCountByReviewId(Long reviewId);
+    @Query("SELECT r.likeCount FROM Review r WHERE r.reviewId = :reviewId")
+    Integer findLikeCountByReviewId(@Param("reviewId") Long reviewId);
 }

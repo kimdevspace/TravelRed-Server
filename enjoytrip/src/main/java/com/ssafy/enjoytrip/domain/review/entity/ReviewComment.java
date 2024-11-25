@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "review_comments")
+@Table(name = "review_comment")
 public class ReviewComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

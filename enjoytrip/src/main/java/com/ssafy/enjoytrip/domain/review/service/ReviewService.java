@@ -79,7 +79,7 @@ public class ReviewService {
     public ReviewDetailResponseDto getReviewDetail(Long reviewId) {
 
         List<ReviewCommentDto> comments = new ArrayList<>();
-        List<ReviewComment> reviewComments = reviewCommentRepository.findAllByReview_ReviewId(reviewId);
+        List<ReviewComment> reviewComments = reviewCommentRepository.findAllByReviewIdWithQuery(reviewId);
 
         for (ReviewComment r : reviewComments) {
             comments.add(ReviewCommentDto.builder()
@@ -91,7 +91,7 @@ public class ReviewService {
         }
 
         ReviewDetailResponseDto detailResponseDto = ReviewDetailResponseDto.builder()
-                .commentCount(reviewCommentRepository.countByReview_ReviewId(reviewId))
+                .commentCount(reviewCommentRepository.countByReviewIdWithQuery(reviewId))
                 .likeCount(reviewRepository.findLikeCountByReviewId(reviewId))
                 .comments(comments)
                 .build();
