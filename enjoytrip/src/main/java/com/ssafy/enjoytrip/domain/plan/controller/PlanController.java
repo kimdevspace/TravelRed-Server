@@ -3,6 +3,7 @@ package com.ssafy.enjoytrip.domain.plan.controller;
 import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.plan.dto.reponse.CityInfoResponseDto;
 import com.ssafy.enjoytrip.domain.plan.dto.reponse.TourInfoResponseDto;
+import com.ssafy.enjoytrip.domain.plan.dto.reponse.TripPlanInfoResponseDto;
 import com.ssafy.enjoytrip.domain.plan.dto.request.CreatePlanRequestDto;
 import com.ssafy.enjoytrip.domain.plan.service.PlanService;
 import com.ssafy.enjoytrip.global.security.SecurityUser;
@@ -83,6 +84,21 @@ public class PlanController {
             return ResponseEntity
                     .internalServerError()
                     .body(null);
+        }
+    }
+
+    /**
+     * 여행 계획 상세 조회
+     */
+    @GetMapping("/detail/{planId}")
+    public ResponseEntity<TripPlanInfoResponseDto> getPlanDetail(@PathVariable Long planId) {
+        try {
+            TripPlanInfoResponseDto planDetail = planService.getPlanDetail(planId);
+            return ResponseEntity.ok(planDetail);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
