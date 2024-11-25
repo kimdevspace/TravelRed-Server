@@ -15,6 +15,7 @@ public class CreateReviewRequestDto {
     private String reviewContent;
     private Long tourId;
     private Long memberId;
+    private String memberName;
     private Integer rating;
     private String reviewImage;
 

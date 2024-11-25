@@ -5,6 +5,8 @@ import com.ssafy.enjoytrip.domain.tour.entity.Tour;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,11 +17,8 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Entity
-@Builder
 @Table(name = "reviews")
-@EntityListeners(AuditingEntityListener.class)
 public class Review {
 
     @Id
@@ -46,14 +45,15 @@ public class Review {
     private String reviewImage;
 
     @NotNull
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     private Integer likeCount;
 
     private Integer rating;  // 1~5 사이의 정수값
 
-    @LastModifiedDate
     @NotNull
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -64,16 +64,16 @@ public class Review {
     }
 
     @Builder
-    public Review(Long reviewId, String reviewTitle, String reviewContent, Member member, Tour tour, String reviewImage, Integer likeCount, Integer reviewRating) {
+    public Review(Long reviewId, String reviewTitle, String reviewContent, Member member, Tour tour, String reviewImage, Integer likeCount, Integer rating) {
         this.reviewId = reviewId;
         this.reviewTitle = reviewTitle;
         this.reviewContent = reviewContent;
         this.member = member;
         this.tour = tour;
         this.reviewImage = reviewImage;
-        this.createdAt = LocalDateTime.now();
-        this.likeCount = likeCount;
+        this.likeCount = 0;
         this.rating = rating;
+        this.createdAt = LocalDateTime.now();
         this.updatedAt = createdAt;
     }
 }
