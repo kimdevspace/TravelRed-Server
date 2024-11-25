@@ -8,6 +8,7 @@ import com.ssafy.enjoytrip.domain.review.dto.response.*;
 import com.ssafy.enjoytrip.domain.review.entity.Review;
 import com.ssafy.enjoytrip.domain.review.entity.ReviewComment;
 import com.ssafy.enjoytrip.domain.review.entity.repository.ReviewCommentRepository;
+import com.ssafy.enjoytrip.domain.review.entity.repository.ReviewLikeRepository;
 import com.ssafy.enjoytrip.domain.review.entity.repository.ReviewRepository;
 import com.ssafy.enjoytrip.domain.tour.entity.Tour;
 import com.ssafy.enjoytrip.domain.tour.entity.repository.TourRepository;
@@ -28,6 +29,7 @@ public class ReviewService {
     private final TourRepository tourRepository;
     private final MemberRepository memberRepository;
     private final ReviewCommentRepository reviewCommentRepository;
+    private final ReviewLikeRepository reviewLikeRepository;
 
     public List<HomeReviewResponseDto> getTopRatedReviews() {
         return reviewRepository.findTopReviewsOrderByRating(PageRequest.of(0, 20));
@@ -111,9 +113,9 @@ public class ReviewService {
         return detailResponseDto;
     }
 
-    public CreateReviewResponseDto updateReview(Long reviewId, UpdateReviewRequestDto updateRequestDto) {
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new EntityNotFoundException("Review not found with id: " + reviewId));
+    public CreateReviewResponseDto updateReview(UpdateReviewRequestDto updateRequestDto) {
+        Review review = reviewRepository.findById(updateRequestDto.getReviewId())
+                .orElseThrow(() -> new EntityNotFoundException("Review not found with id: " + updateRequestDto.getReviewId()));
 
         // 리뷰 정보 업데이트
         if (updateRequestDto.getReviewTitle() != null) {
@@ -143,5 +145,20 @@ public class ReviewService {
                 .tourId(updateRequestDto.getTourId())
                 .build();
     }
+
+    public void deleteReview(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new EntityNotFoundException("Review not found with id: " + reviewId));
+
+        // 연관된 댓글들 삭제
+        reviewCommentRepository.deleteByReviewId(reviewId);
+
+        // 연관된 좋아요 삭제
+        reviewLikeRepository.deleteByReviewId(reviewId);
+
+        // 리뷰 삭제
+        reviewRepository.delete(review);
+    }
+
 
 }

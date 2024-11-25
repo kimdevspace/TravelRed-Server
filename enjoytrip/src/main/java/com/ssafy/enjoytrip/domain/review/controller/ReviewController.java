@@ -24,9 +24,9 @@ public class ReviewController {
         return ResponseEntity.ok(result);
     }
 
-    @PatchMapping("/{reviewId}")
-    public ResponseEntity<?> updateReview(@PathVariable Long reviewId, @RequestBody UpdateReviewRequestDto updateRequestDto) {
-        CreateReviewResponseDto result = reviewService.updateReview(reviewId, updateRequestDto);
+    @PatchMapping
+    public ResponseEntity<?> updateReview(@RequestBody UpdateReviewRequestDto updateRequestDto) {
+        CreateReviewResponseDto result = reviewService.updateReview(updateRequestDto);
         return ResponseEntity.ok(result);
     }
 
@@ -45,6 +45,12 @@ public class ReviewController {
     public ResponseEntity<?> getReviewDetail(@PathVariable Long reviewId) {
         ReviewDetailResponseDto reviewDetailResponseDto = reviewService.getReviewDetail(reviewId);
         return ResponseEntity.ok(reviewDetailResponseDto);
+    }
+
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long reviewId) {
+        reviewService.deleteReview(reviewId);
+        return ResponseEntity.noContent().build();  // 204 No Content 반환
     }
 
 }
