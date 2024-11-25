@@ -1,15 +1,13 @@
 package com.ssafy.enjoytrip.domain.plan.controller;
 
-import com.ssafy.enjoytrip.domain.city.entity.City;
 import com.ssafy.enjoytrip.domain.member.entity.Member;
-import com.ssafy.enjoytrip.domain.plan.dto.reponse.CityInfoResponse;
-import com.ssafy.enjoytrip.domain.plan.dto.reponse.TourInfoResponse;
-import com.ssafy.enjoytrip.domain.plan.dto.request.CreatePlanRequest;
+import com.ssafy.enjoytrip.domain.plan.dto.reponse.CityInfoResponseDto;
+import com.ssafy.enjoytrip.domain.plan.dto.reponse.TourInfoResponseDto;
+import com.ssafy.enjoytrip.domain.plan.dto.request.CreatePlanRequestDto;
 import com.ssafy.enjoytrip.domain.plan.service.PlanService;
 import com.ssafy.enjoytrip.global.security.SecurityUser;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,9 +28,9 @@ public class PlanController {
      * 여행 계획 생성을 위한 도시 정보조회
      */
     @GetMapping
-    public ResponseEntity<List<CityInfoResponse>> getCitiesForPlanning() {
+    public ResponseEntity<List<CityInfoResponseDto>> getCitiesForPlanning() {
         try {
-            List<CityInfoResponse> cities =  planService.getCitiesForPlanning();
+            List<CityInfoResponseDto> cities =  planService.getCitiesForPlanning();
             return ResponseEntity.ok(cities);
         } catch (Exception e) {
             return ResponseEntity
@@ -45,9 +43,9 @@ public class PlanController {
      * 특정 도시의 관광지 정보 조회
      */
     @GetMapping("/{cityCode}")
-    public ResponseEntity<List<TourInfoResponse>> getToursByCity(@PathVariable Integer cityCode) {
+    public ResponseEntity<List<TourInfoResponseDto>> getToursByCity(@PathVariable Integer cityCode) {
         try {
-            List<TourInfoResponse> tours = planService.getToursByCity(cityCode);
+            List<TourInfoResponseDto> tours = planService.getToursByCity(cityCode);
             return ResponseEntity.ok(tours);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -64,7 +62,7 @@ public class PlanController {
      */
 
     @PostMapping
-    public ResponseEntity<Long> createPlan (@RequestBody CreatePlanRequest request) {
+    public ResponseEntity<Long> createPlan (@RequestBody CreatePlanRequestDto request) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
@@ -73,7 +71,7 @@ public class PlanController {
         try {
             Long planId = planService.createPlan(member, request);
             return ResponseEntity.created(
-                    URI.create("/api/plans/" + planId)
+                    URI.create("/api/v1/plans/detail/" + planId)
             ).body(planId);
 
         } catch (EntityNotFoundException e) {

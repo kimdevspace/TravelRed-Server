@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TourInfoResponse {
+public class TourInfoResponseDto {
     private Long tourId;
     private String tourName;
     private String address;
@@ -16,7 +16,7 @@ public class TourInfoResponse {
     private Long reviewCount;
 
     @Builder
-    public TourInfoResponse(Long tourId, String tourName, String address, String backgroundImage, Double avgRating, Long reviewCount) {
+    public TourInfoResponseDto(Long tourId, String tourName, String address, String backgroundImage, Double avgRating, Long reviewCount) {
         this.tourId = tourId;
         this.tourName = tourName;
         this.address = address;
