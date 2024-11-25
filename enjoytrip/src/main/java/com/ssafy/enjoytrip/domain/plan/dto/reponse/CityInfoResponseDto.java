@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CityInfoResponse {
+public class CityInfoResponseDto {
     private Long cityCode;
     private String cityName;
 
     @Builder
-    public CityInfoResponse(Long cityCode, String cityName) {
+    public CityInfoResponseDto(Long cityCode, String cityName) {
         this.cityCode = cityCode;
         this.cityName = cityName;
     }
