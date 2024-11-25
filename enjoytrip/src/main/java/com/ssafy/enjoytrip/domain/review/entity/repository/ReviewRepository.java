@@ -31,5 +31,12 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     void deleteAllByReviewIdIn(List<Long> ids);
 
-    Long countByMemberId(Long memberId);  // 추가
+    Long countByMemberId(Long memberId);
+    List<Review> findByMemberId(Long memberId);
+
+
+    @Query("SELECT r FROM Review r " +
+            "JOIN ReviewLike rl ON r.id = rl.review.id " +
+            "WHERE rl.member.id = :memberId")
+    List<Review> findLikedReviewsByMemberId(@Param("memberId") Long memberId);
 }
