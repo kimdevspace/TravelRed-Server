@@ -4,6 +4,7 @@ import com.ssafy.enjoytrip.domain.city.entity.City;
 import com.ssafy.enjoytrip.domain.city.entity.repository.CityRepository;
 import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.plan.dto.reponse.CityInfoResponse;
+import com.ssafy.enjoytrip.domain.plan.dto.reponse.TourInfoResponse;
 import com.ssafy.enjoytrip.domain.plan.dto.request.CreatePlanRequest;
 import com.ssafy.enjoytrip.domain.plan.entity.Plan;
 import com.ssafy.enjoytrip.domain.plan.entity.PlanTrip;
@@ -68,5 +69,12 @@ public class PlanService {
                         .cityName(city.getCityName())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TourInfoResponse> getToursByCity(Integer cityCode) {
+        City city = cityRepository.findById(cityCode)
+                .orElseThrow(() -> new EntityNotFoundException("도시를 찾을 수 없습니다"));
+        return tourRepository.findTourInfoByCity(city);
     }
 }

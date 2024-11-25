@@ -3,6 +3,7 @@ package com.ssafy.enjoytrip.domain.plan.controller;
 import com.ssafy.enjoytrip.domain.city.entity.City;
 import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.plan.dto.reponse.CityInfoResponse;
+import com.ssafy.enjoytrip.domain.plan.dto.reponse.TourInfoResponse;
 import com.ssafy.enjoytrip.domain.plan.dto.request.CreatePlanRequest;
 import com.ssafy.enjoytrip.domain.plan.service.PlanService;
 import com.ssafy.enjoytrip.global.security.SecurityUser;
@@ -11,10 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -28,7 +27,7 @@ public class PlanController {
     private final PlanService planService;
 
     /**
-     * 여행 계획 생성을 위한 도시 정보 조회
+     * 여행 계획 생성을 위한 도시 정보조회
      */
     @GetMapping
     public ResponseEntity<List<CityInfoResponse>> getCitiesForPlanning() {
@@ -39,6 +38,21 @@ public class PlanController {
             return ResponseEntity
                     .internalServerError()
                     .build();
+        }
+    }
+
+    /**
+     * 특정 도시의 관광지 정보 조회
+     */
+    @GetMapping("/{cityCode}")
+    public ResponseEntity<List<TourInfoResponse>> getToursByCity(@PathVariable Integer cityCode) {
+        try {
+            List<TourInfoResponse> tours = planService.getToursByCity(cityCode);
+            return ResponseEntity.ok(tours);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
