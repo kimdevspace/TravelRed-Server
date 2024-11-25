@@ -17,13 +17,10 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "tour_detail")
 public class TourDetail {
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @MapsId  // 부모 테이블의 기본키를 매핑
     @JoinColumn(name = "tour_id")
     private Tour tour;
-
-    @NotNull
-    private String cityCode;
 
     @NotNull
     private String description;
@@ -37,10 +34,9 @@ public class TourDetail {
     private BigDecimal longitude;
 
     @Builder
-    public TourDetail(Tour tour, String cityCode, String description, String telephone,
+    public TourDetail(Tour tour, String description, String telephone,
                       BigDecimal latitude, BigDecimal longitude) {
         this.tour = tour;
-        this.cityCode = cityCode;
         this.description = description;
         this.telephone = telephone;
         this.latitude = latitude;

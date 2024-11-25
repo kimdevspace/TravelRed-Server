@@ -22,13 +22,12 @@ public class Tour {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "content_id")
     private TourContent tourContent;
 
     @NotNull
     private String tourName;
-
 
     @NotNull
     private String address;
@@ -37,23 +36,25 @@ public class Tour {
 
     private String backgroundImage;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_code")
     private City city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "town_code")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumns({
+            @JoinColumn(name = "town_code", referencedColumnName = "town_code"),
+            @JoinColumn(name = "city_code", referencedColumnName = "city_code")
+    })
     private Town town;
 
-    @Column(columnDefinition = "INT DEFAULT 0")
     private Integer hit;
 
-    @OneToOne(mappedBy = "tour", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "tour", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private TourDetail tourDetail;
 
     @Builder
     public Tour(TourContent tourContent, String tourName, String address, String zipCode,
-                String backgroundImage, City city, Town town, Integer hit) {
+                String backgroundImage, City city, Town town) {
         this.tourContent = tourContent;
         this.tourName = tourName;
         this.address = address;
@@ -61,7 +62,7 @@ public class Tour {
         this.backgroundImage = backgroundImage;
         this.city = city;
         this.town = town;
-        this.hit = hit;
+        this.hit = 0;
     }
 
     // 연관관계 편의 메서드

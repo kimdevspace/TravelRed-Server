@@ -19,7 +19,6 @@ public class City {
 
     @Id
     @Column(name = "city_code")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
