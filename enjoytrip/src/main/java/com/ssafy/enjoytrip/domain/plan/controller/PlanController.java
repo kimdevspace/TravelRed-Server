@@ -1,6 +1,8 @@
 package com.ssafy.enjoytrip.domain.plan.controller;
 
+import com.ssafy.enjoytrip.domain.city.entity.City;
 import com.ssafy.enjoytrip.domain.member.entity.Member;
+import com.ssafy.enjoytrip.domain.plan.dto.reponse.CityInfoResponse;
 import com.ssafy.enjoytrip.domain.plan.dto.request.CreatePlanRequest;
 import com.ssafy.enjoytrip.domain.plan.service.PlanService;
 import com.ssafy.enjoytrip.global.security.SecurityUser;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 
 @RestController
@@ -23,6 +26,21 @@ import java.net.URI;
 public class PlanController {
 
     private final PlanService planService;
+
+    /**
+     * 여행 계획 생성을 위한 도시 정보 조회
+     */
+    @GetMapping
+    public ResponseEntity<List<CityInfoResponse>> getCitiesForPlanning() {
+        try {
+            List<CityInfoResponse> cities =  planService.getCitiesForPlanning();
+            return ResponseEntity.ok(cities);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .internalServerError()
+                    .build();
+        }
+    }
 
     /**
      * 여행 계획 생성
