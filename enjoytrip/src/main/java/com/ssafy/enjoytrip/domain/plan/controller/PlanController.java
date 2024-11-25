@@ -9,8 +9,10 @@ import com.ssafy.enjoytrip.domain.plan.service.PlanService;
 import com.ssafy.enjoytrip.global.security.SecurityUser;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -102,4 +104,23 @@ public class PlanController {
         }
     }
 
+    /**
+     * 여행 계획 삭제
+     */
+    @DeleteMapping("/{planId}")
+    public ResponseEntity<Void> deletePlan(@PathVariable Long planId, @AuthenticationPrincipal SecurityUser securityUser) {
+        try {
+            planService.deletePlan(planId, securityUser.getMember());
+            return ResponseEntity.noContent().build();
+
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

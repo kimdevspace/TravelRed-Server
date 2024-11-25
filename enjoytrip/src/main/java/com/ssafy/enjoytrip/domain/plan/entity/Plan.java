@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity //이 클래스가 JPA 엔터티임을 나타낸다. DB 테이블과 매핑
 @Table(name = "plan") // 매핑할 테이블의 이름 지정
@@ -43,6 +45,9 @@ public class Plan {
 
     @Column(name = "day", nullable = false)
     private Integer day;
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.REMOVE)
+    private List<PlanTrip> planTrips = new ArrayList<>();
 
     @Builder
     private Plan(String title, Member member, String thumbnailImage,

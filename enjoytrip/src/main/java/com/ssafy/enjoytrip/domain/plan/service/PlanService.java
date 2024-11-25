@@ -135,4 +135,15 @@ public class PlanService {
 
         return response;
     }
+
+    public void deletePlan(Long planId, Member member) {
+        Plan plan = planRepository.findById(planId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 여행 계획입니다."));
+
+        if (!plan.getMember().getId().equals(member.getId())) {
+            throw new IllegalStateException("삭제 권한이 없습니다.");
+        }
+
+        planRepository.deleteById(planId);
+    }
 }
