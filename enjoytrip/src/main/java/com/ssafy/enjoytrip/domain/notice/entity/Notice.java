@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.domain.notice.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,9 +11,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "notice")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "notice")
 public class Notice {
 
     @Id
@@ -26,13 +27,13 @@ public class Notice {
     @Column(name = "notice_content")
     private String content;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
+    @NotNull
     private LocalDateTime createdAt;
 
     @Builder
     public Notice(String title, String content) {
         this.title = title;
         this.content = content;
+        this.createdAt = LocalDateTime.now();
     }
 }

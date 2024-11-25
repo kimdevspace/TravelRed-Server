@@ -1,2 +1,2 @@
- insert into enjoytrip.members (member_id, member_name, member_email, member_pwd, nickname, profile_image, city_code, town_code, provider_type, role_type, is_email_verified, is_locked, created_at, updated_at)
-values  (1, '김싸피', 'ssafy@ssafy.com', '1234', '김싸피', null, 3, 3, 'LOCAL', 'ADMIN', 1, 0, '2024-05-23 03:17:16', '2024-05-23 13:42:22');
+insert into enjoytrip.members (member_id, member_name, member_email, member_pwd, nickname, profile_image, city_code, town_code, provider_type, role_type, is_email_verified, is_locked, created_at, updated_at)
+values  (1, '김싸피', 'ssafy@ssafy.com', '{noop}1234', '김싸피', null, 3, 3, 'LOCAL', 'ADMIN', 1, 0, '2024-05-23 03:17:16', '2024-05-23 13:42:22');
