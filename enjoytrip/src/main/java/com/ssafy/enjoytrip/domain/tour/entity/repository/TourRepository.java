@@ -18,4 +18,6 @@ public interface TourRepository  extends JpaRepository<Tour, Long> {
             "t.id, t.tourName, t.address, t.backgroundImage, t.hit) " +
             "FROM Tour t ORDER BY t.hit DESC")
     List<HomeTourResponseDto> findTop20ByOrderByHitDesc(Pageable pageable);
+
+    Tour findTourById(Long tourId);
 }
