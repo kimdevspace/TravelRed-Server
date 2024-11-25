@@ -10,4 +10,5 @@ import java.util.List;
 public interface PlanRepository extends JpaRepository<Plan, Long> {
     void deleteByIdIn(List<Long> planIds);
     Long countByMemberId(Long memberId);  // 추가
+    List<Plan> findByMemberId(Long memberId);
 }

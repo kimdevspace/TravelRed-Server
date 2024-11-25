@@ -20,4 +20,10 @@ public interface ReviewCommentRepository extends JpaRepository<ReviewComment, Lo
     @Query("DELETE FROM ReviewComment rc WHERE rc.review.reviewId = :reviewId")
     void deleteByReviewId(@Param("reviewId") Long reviewId);
 
+
+    @Query("SELECT rc FROM ReviewComment rc " +
+            "JOIN FETCH rc.review r " +
+            "WHERE rc.member.id = :memberId")
+    List<ReviewComment> findByMemberId(@Param("memberId") Long memberId);
+
 }
