@@ -28,4 +28,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("SELECT r.likeCount FROM Review r WHERE r.reviewId = :reviewId")
     Integer findLikeCountByReviewId(@Param("reviewId") Long reviewId);
+
+    void deleteAllByReviewIdIn(List<Long> ids);
 }
