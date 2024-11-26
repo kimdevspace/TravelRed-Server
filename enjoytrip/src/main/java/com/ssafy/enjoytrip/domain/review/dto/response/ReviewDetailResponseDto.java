@@ -17,6 +17,7 @@ public class ReviewDetailResponseDto {
     // 댓글 전체
     private Long commentCount;
     private Integer likeCount;
+    private String reviewImage;
     private List<ReviewCommentDto> comments;
 
 }

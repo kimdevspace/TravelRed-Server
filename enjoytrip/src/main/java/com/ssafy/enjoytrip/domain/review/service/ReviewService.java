@@ -100,13 +100,17 @@ public class ReviewService {
                     .commentId(r.getCommentId())
                     .content(r.getContent())
                     .memberId(r.getMember().getId())
+                    .profileImage(r.getMember().getProfileImage())
                     .createAt(r.getCreatedAt())
                     .build());
         }
 
+        Review review = reviewRepository.findById(reviewId).get();
+
         ReviewDetailResponseDto detailResponseDto = ReviewDetailResponseDto.builder()
                 .commentCount(reviewCommentRepository.countByReviewIdWithQuery(reviewId))
-                .likeCount(reviewRepository.findLikeCountByReviewId(reviewId))
+                .likeCount(review.getLikeCount())
+                .reviewImage(review.getReviewImage())
                 .comments(comments)
                 .build();
 

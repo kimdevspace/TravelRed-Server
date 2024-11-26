@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
@@ -53,6 +54,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Long countByMemberId(Long memberId);
     List<Review> findByMemberId(Long memberId);
+
+    Optional<Review> findById(Long reviewId);
 
 
     @Query("SELECT r FROM Review r " +
