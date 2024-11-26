@@ -60,4 +60,22 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "WHERE rl.member.id = :memberId")
     List<Review> findLikedReviewsByMemberId(@Param("memberId") Long memberId);
 
+    @Query("SELECT new com.ssafy.enjoytrip.domain.review.dto.response.SearchReviewResponseDto(" +
+            "r.reviewId, " +
+            "r.reviewTitle, " +
+            "r.reviewContent, " +
+            "r.reviewImage, " +
+            "COALESCE(r.rating, 0), " +
+            "COALESCE(r.likeCount, 0), " +
+            "r.updatedAt, " +
+            "r.member.id, " +
+            "COALESCE(r.member.profileImage, ''), " +
+            "r.member.nickname) " +
+            "FROM Review r " +
+            "WHERE LOWER(r.reviewTitle) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(r.reviewContent) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(r.tour.city.cityName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "ORDER BY r.updatedAt DESC")
+    List<SearchReviewResponseDto> searchReviewsWithKeyWord(@Param("keyword") String keyword);
+
 }

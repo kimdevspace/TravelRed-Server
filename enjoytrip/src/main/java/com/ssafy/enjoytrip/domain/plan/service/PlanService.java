@@ -35,6 +35,10 @@ public class PlanService {
     private final TourRepository tourRepository;
     private final CityRepository cityRepository;
 
+    public List<SearchPlanResponseDto> searchPlanWithKeyWord(String keyword) {
+        return planRepository.searchPlansByKeyword(keyword);
+    }
+
     public Long createPlan(@AuthenticationPrincipal Member member, CreatePlanRequestDto request) {
         City city = cityRepository.findById(request.getCityCode())
                 .orElseThrow(() -> new EntityNotFoundException("도시를 찾을 수 없습니다"));

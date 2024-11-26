@@ -4,6 +4,7 @@ import com.ssafy.enjoytrip.domain.plan.dto.response.SearchPlanResponseDto;
 import com.ssafy.enjoytrip.domain.plan.entity.Plan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,4 +29,19 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
     List<SearchPlanResponseDto> findAllPlansWithMemberInfo();
 
     List<Plan> findByMemberId(Long memberId);
+
+    @Query("SELECT new com.ssafy.enjoytrip.domain.plan.dto.response.SearchPlanResponseDto(" +
+            "p.id, " +                      // planId (Long)
+            "p.title, " +                   // title (String)
+            "COALESCE(p.thumbnailImage, ''), " +  // thumbnailImage (String)
+            "p.startDate, " +               // startDate (LocalDate)
+            "p.endDate, " +                 // endDate (LocalDate)
+            "p.member.id, " +               // memberId (Long)
+            "COALESCE(p.member.profileImage, ''), " +  // profileImage (String)
+            "p.member.nickname) " +         // nickname (String)
+            "FROM Plan p " +
+            "WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(p.city.cityName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "ORDER BY p.startDate DESC")
+    List<SearchPlanResponseDto> searchPlansByKeyword(@Param("keyword") String keyword);
 }

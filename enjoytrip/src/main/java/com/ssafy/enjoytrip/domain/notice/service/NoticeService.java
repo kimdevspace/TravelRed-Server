@@ -22,4 +22,8 @@ public class NoticeService {
     public List<Notice> getAll() {
         return noticeRepository.findAll();
     }
+
+    public List<Notice> searchNoticeWithKeyWord(String keyword) {
+        return noticeRepository.searchNoticesWithKeyWord(keyword);
+    }
 }

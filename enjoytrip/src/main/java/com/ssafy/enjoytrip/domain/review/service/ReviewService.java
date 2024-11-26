@@ -164,5 +164,8 @@ public class ReviewService {
         return reviewRepository.findAllReviewsWithMamberInfo();
     }
 
+    public List<SearchReviewResponseDto> searchReviewWithKeyWord(String keyword) {
+        return reviewRepository.searchReviewsWithKeyWord(keyword);
+    }
 
 }

@@ -27,4 +27,12 @@ public class SearchService {
                 .build();
     }
 
+    public SearchResponseDto searchKeyWord(String keyword) {
+        return SearchResponseDto.builder()
+                .plans(planService.searchPlanWithKeyWord(keyword))
+                .reviews(reviewService.searchReviewWithKeyWord(keyword))
+                .notices(noticeService.searchNoticeWithKeyWord(keyword))
+                .build();
+    }
+
 }
