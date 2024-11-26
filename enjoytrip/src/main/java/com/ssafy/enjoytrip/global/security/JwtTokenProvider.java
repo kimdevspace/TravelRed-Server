@@ -39,9 +39,10 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(String userPK, RoleType roles) {
+    public String createToken(String userPK, RoleType roles, Long memberId) {
         Claims claims = Jwts.claims().setSubject(userPK);
         claims.put("roles", "ROLE_" + roles.name());  // "ROLE_" prefix 추가
+        claims.put("memberId", memberId);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)

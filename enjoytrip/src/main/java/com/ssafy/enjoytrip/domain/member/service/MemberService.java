@@ -94,7 +94,7 @@ public class MemberService {
             throw new IllegalArgumentException("이메일 인증을 완료해주세요.");
         }
 
-        return jwtTokenProvider.createToken(member.getMemberEmail(), member.getRoleType());
+        return jwtTokenProvider.createToken(member.getMemberEmail(), member.getRoleType(), member.getId());
     }
 
     // 인증 이메일 보내기
