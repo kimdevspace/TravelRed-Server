@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class ReviewCommentDto {
 
     private Long memberId;
+    private String nickname;
     private String profileImage;
     private Long commentId;
     private String content;

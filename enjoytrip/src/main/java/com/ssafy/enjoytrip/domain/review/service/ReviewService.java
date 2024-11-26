@@ -2,6 +2,7 @@ package com.ssafy.enjoytrip.domain.review.service;
 
 import com.ssafy.enjoytrip.domain.member.entity.Member;
 import com.ssafy.enjoytrip.domain.member.entity.repository.MemberRepository;
+import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewCommentRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.request.UpdateReviewRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.response.*;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -101,6 +103,7 @@ public class ReviewService {
                     .content(r.getContent())
                     .memberId(r.getMember().getId())
                     .profileImage(r.getMember().getProfileImage())
+                    .nickname(r.getMember().getNickname())
                     .createAt(r.getCreatedAt())
                     .build());
         }
@@ -170,6 +173,27 @@ public class ReviewService {
 
     public List<SearchReviewResponseDto> searchReviewWithKeyWord(String keyword) {
         return reviewRepository.searchReviewsWithKeyWord(keyword);
+    }
+
+    public ReviewCommentDto createReviewComment(CreateReviewCommentRequestDto requestDto) {
+        Member member = memberRepository.findMemberById(requestDto.getMemberId());
+        Review review = reviewRepository.findById(requestDto.getReviewId()).get();
+
+        ReviewComment comment = reviewCommentRepository.save(ReviewComment.builder()
+                .review(review)
+                .content(requestDto.getContent())
+                .member(member)
+                .createdAt(LocalDateTime.now())
+                .build());
+
+        return ReviewCommentDto.builder()
+                .memberId(member.getId())
+                .nickname(member.getNickname())
+                .profileImage(member.getProfileImage())
+                .commentId(comment.getCommentId())
+                .content(comment.getContent())
+                .createAt(comment.getCreatedAt())
+                .build();
     }
 
 }

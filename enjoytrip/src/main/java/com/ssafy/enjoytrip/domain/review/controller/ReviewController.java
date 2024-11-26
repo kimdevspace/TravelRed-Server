@@ -1,12 +1,10 @@
 package com.ssafy.enjoytrip.domain.review.controller;
 
+import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewCommentRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.request.CreateReviewRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.request.ReviewLikeRequestDto;
 import com.ssafy.enjoytrip.domain.review.dto.request.UpdateReviewRequestDto;
-import com.ssafy.enjoytrip.domain.review.dto.response.CreateReviewResponseDto;
-import com.ssafy.enjoytrip.domain.review.dto.response.ReviewDetailResponseDto;
-import com.ssafy.enjoytrip.domain.review.dto.response.ReviewResponseDto;
-import com.ssafy.enjoytrip.domain.review.dto.response.ReviewSummaryDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.*;
 import com.ssafy.enjoytrip.domain.review.service.ReviewLikeService;
 import com.ssafy.enjoytrip.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +61,11 @@ public class ReviewController {
         return ResponseEntity.noContent().build();  // 204 No Content 반환
     }
 
+    @PostMapping("/comment")
+    public ResponseEntity<?> createReviewComment(@RequestBody CreateReviewCommentRequestDto commentRequestDto) {
+        ReviewCommentDto reviewCommentDto = reviewService.createReviewComment(commentRequestDto);
+        return ResponseEntity.ok(reviewCommentDto);
+    }
 
 
 }

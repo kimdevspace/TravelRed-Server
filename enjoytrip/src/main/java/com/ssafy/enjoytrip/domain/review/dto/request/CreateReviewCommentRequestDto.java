@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewLikeRequestDto {
+public class CreateReviewCommentRequestDto {
+
     private Long reviewId;
-    private Long memberId;
+    private Long memberId; // 작성자 Id
+    private String content;
+
 }
