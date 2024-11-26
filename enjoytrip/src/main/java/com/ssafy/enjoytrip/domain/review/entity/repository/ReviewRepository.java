@@ -21,6 +21,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "r.reviewContent, " +
             "r.tour.id, " +        // Tour 엔티티의 id 필드
             "r.tour.tourName, " +  // Tour 엔티티의 tourName 필드
+            "r.member.id," +
+            "r.member.nickname," +
+            "r.member.profileImage," +
             "COALESCE(r.likeCount, 0), " +
             "COALESCE(r.rating, 0)) " +
             "FROM Review r " +
