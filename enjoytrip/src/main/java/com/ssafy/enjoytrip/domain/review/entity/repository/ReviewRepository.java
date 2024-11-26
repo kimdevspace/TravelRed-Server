@@ -32,8 +32,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     void deleteAllByReviewIdIn(List<Long> ids);
 
-    Long countByMemberId(Long memberId);  // 추가
-
     @Query("SELECT new com.ssafy.enjoytrip.domain.review.dto.response.SearchReviewResponseDto(" +
             "r.reviewId, " +           // 1
             "r.reviewTitle, " +        // 2
@@ -49,4 +47,14 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "JOIN r.member m " +
             "ORDER BY r.updatedAt DESC")
     List<SearchReviewResponseDto> findAllReviewsWithMamberInfo();
+
+    Long countByMemberId(Long memberId);
+    List<Review> findByMemberId(Long memberId);
+
+
+    @Query("SELECT r FROM Review r " +
+            "JOIN ReviewLike rl ON r.id = rl.review.id " +
+            "WHERE rl.member.id = :memberId")
+    List<Review> findLikedReviewsByMemberId(@Param("memberId") Long memberId);
+
 }

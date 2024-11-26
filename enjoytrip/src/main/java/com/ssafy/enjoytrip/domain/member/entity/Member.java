@@ -106,4 +106,14 @@ public class Member {
         this.updatedAt = LocalDateTime.now();  // 수정 시간도 업데이트
     }
 
+    public void updateProfile(String nickname, String profileImage, Town town) {
+        if (nickname != null) this.nickname = nickname;
+        if (profileImage != null) this.profileImage = profileImage;
+        if (town != null) {
+            this.town = town;
+            this.city = town.getCity();
+        }
+        this.updatedAt = LocalDateTime.now();  // 수정 시간 업데이트
+    }
+
 }

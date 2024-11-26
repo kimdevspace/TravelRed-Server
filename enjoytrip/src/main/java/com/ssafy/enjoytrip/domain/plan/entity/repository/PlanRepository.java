@@ -26,4 +26,6 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
             "JOIN p.member m " +
             "ORDER BY p.id DESC")
     List<SearchPlanResponseDto> findAllPlansWithMemberInfo();
+
+    List<Plan> findByMemberId(Long memberId);
 }
