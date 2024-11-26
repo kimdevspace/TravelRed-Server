@@ -59,7 +59,7 @@ public class ReviewService {
                 .rating(review.getRating())
                 .reviewImage(review.getReviewImage())
                 .updatedAt(review.getCreatedAt())
-                .memberName(member.getMemberName())
+                .nickname(member.getNickname())
                 .memberId(member.getId())
                 .tourId(tour.getId())
                 .build();
@@ -150,7 +150,7 @@ public class ReviewService {
                 .rating(updatedReview.getRating())
                 .reviewImage(updatedReview.getReviewImage())
                 .updatedAt(updatedReview.getUpdatedAt())
-                .memberName(updateRequestDto.getMemberName())
+                .nickname(updatedReview.getMember().getNickname())
                 .memberId(updateRequestDto.getMemberId())
                 .tourId(updateRequestDto.getTourId())
                 .build();

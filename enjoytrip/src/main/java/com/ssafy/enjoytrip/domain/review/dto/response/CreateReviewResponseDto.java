@@ -19,5 +19,5 @@ public class CreateReviewResponseDto {
     private LocalDateTime updatedAt;
     private Long tourId;
     private Long memberId;
-    private String memberName;
+    private String nickname;
 }
