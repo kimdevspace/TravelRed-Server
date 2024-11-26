@@ -35,17 +35,18 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Long countByMemberId(Long memberId);  // 추가
 
     @Query("SELECT new com.ssafy.enjoytrip.domain.review.dto.response.SearchReviewResponseDto(" +
-            "r.reviewId, " +                    // reviewId
-            "r.reviewTitle, " +                 // reviewTitle
-            "r.reviewContent, " +               // reviewContent
-            "r.reviewImage, " +           // reviewImage
-            "r.rating, " +                // rating
-            "r.updatedAt, " +              // updateAt
-            "m.id, " +                    // memberId
-            "m.profileImage, " +          // profileImage
-            "m.nickname) " +              // nickname
+            "r.reviewId, " +           // 1
+            "r.reviewTitle, " +        // 2
+            "r.reviewContent, " +      // 3
+            "r.reviewImage, " +        // 4
+            "r.rating, " +            // 5
+            "r.likeCount, " +         // 6
+            "r.updatedAt, " +         // 7
+            "m.id, " +                // 8
+            "m.profileImage, " +      // 9
+            "m.nickname) " +          // 10
             "FROM Review r " +
-            "JOIN r.member m " +          // Review와 Member 조인
+            "JOIN r.member m " +
             "ORDER BY r.updatedAt DESC")
     List<SearchReviewResponseDto> findAllReviewsWithMamberInfo();
 }
