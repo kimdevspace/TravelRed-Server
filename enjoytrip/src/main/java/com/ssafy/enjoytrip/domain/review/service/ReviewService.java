@@ -160,5 +160,9 @@ public class ReviewService {
         reviewRepository.delete(review);
     }
 
+    public List<SearchReviewResponseDto> getReivewForSearchPage() {
+        return reviewRepository.findAllReviewsWithMamberInfo();
+    }
+
 
 }

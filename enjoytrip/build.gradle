@@ -22,6 +22,8 @@ configurations {
 repositories {
 	mavenCentral()
 	jcenter()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
@@ -52,6 +54,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:0.8.0'
 }
 
 tasks.named('test') {

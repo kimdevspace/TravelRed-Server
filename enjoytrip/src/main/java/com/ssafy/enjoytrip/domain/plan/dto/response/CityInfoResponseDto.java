@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.domain.plan.dto.reponse;
+package com.ssafy.enjoytrip.domain.plan.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Builder;

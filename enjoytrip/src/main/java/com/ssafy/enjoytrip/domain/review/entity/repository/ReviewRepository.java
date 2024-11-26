@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.domain.review.entity.repository;
 
 import com.ssafy.enjoytrip.domain.review.dto.response.HomeReviewResponseDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.SearchReviewResponseDto;
 import com.ssafy.enjoytrip.domain.review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +33,19 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     void deleteAllByReviewIdIn(List<Long> ids);
 
     Long countByMemberId(Long memberId);  // 추가
+
+    @Query("SELECT new com.ssafy.enjoytrip.domain.review.dto.response.SearchReviewResponseDto(" +
+            "r.reviewId, " +                    // reviewId
+            "r.reviewTitle, " +                 // reviewTitle
+            "r.reviewContent, " +               // reviewContent
+            "r.reviewImage, " +           // reviewImage
+            "r.rating, " +                // rating
+            "r.updatedAt, " +              // updateAt
+            "m.id, " +                    // memberId
+            "m.profileImage, " +          // profileImage
+            "m.nickname) " +              // nickname
+            "FROM Review r " +
+            "JOIN r.member m " +          // Review와 Member 조인
+            "ORDER BY r.updatedAt DESC")
+    List<SearchReviewResponseDto> findAllReviewsWithMamberInfo();
 }

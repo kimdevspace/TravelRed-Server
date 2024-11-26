@@ -19,4 +19,7 @@ public class NoticeService {
         return noticeRepository.findTop10ByOrderByCreatedAtDesc();
     }
 
+    public List<Notice> getAll() {
+        return noticeRepository.findAll();
+    }
 }

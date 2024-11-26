@@ -1,7 +1,7 @@
 package com.ssafy.enjoytrip.domain.tour.entity.repository;
 
 import com.ssafy.enjoytrip.domain.city.entity.City;
-import com.ssafy.enjoytrip.domain.plan.dto.reponse.TourInfoResponseDto;
+import com.ssafy.enjoytrip.domain.plan.dto.response.TourInfoResponseDto;
 import com.ssafy.enjoytrip.domain.tour.dto.response.HomeTourResponseDto;
 import com.ssafy.enjoytrip.domain.tour.entity.Tour;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,7 @@ public interface TourRepository  extends JpaRepository<Tour, Long> {
 
     Tour findTourById(Long tourId);
 
-    @Query("SELECT new com.ssafy.enjoytrip.domain.plan.dto.reponse.TourInfoResponseDto(" +
+    @Query("SELECT new com.ssafy.enjoytrip.domain.plan.dto.response.TourInfoResponseDto(" +
             "t.id, t.tourName, t.address, t.backgroundImage, " +
             "COALESCE(AVG(r.rating), 0), COUNT(DISTINCT r)) " +  // reviewRating → rating
             "FROM Tour t " +
@@ -29,4 +29,6 @@ public interface TourRepository  extends JpaRepository<Tour, Long> {
             "WHERE t.city = :city " +
             "GROUP BY t.id, t.tourName, t.address, t.backgroundImage")
     List<TourInfoResponseDto> findTourInfoByCity(@Param("city") City city);
+
+    List<Tour> findAll();
 }
