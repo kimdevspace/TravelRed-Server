@@ -44,6 +44,9 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/", "/index.html", "/*.js", "/*.css", "/assets/**", "/images/**", "/*.json",
+                                "/*.ico", "/*.png", "/*.svg").permitAll()
+                        .requestMatchers("/api/v1/member/login", "/api/v1/member/create").permitAll()
                         .requestMatchers(
                                 "/api/v1/",
                                 "/api/v1/member/login",
