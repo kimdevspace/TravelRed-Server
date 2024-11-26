@@ -63,7 +63,6 @@ public class ReviewService {
                 .memberId(member.getId())
                 .tourId(tour.getId())
                 .build();
-
     }
 
     public EachTourReviewResponseDto getReviewWithTour(Long tourId) {
@@ -88,6 +87,7 @@ public class ReviewService {
                         .backgroundImage(tour.getBackgroundImage())
                         .address(tour.getAddress())
                         .zipCode(tour.getZipCode())
+                        .tourName(tour.getTourName())
                         .description(tour.getTourDetail().getDescription())
                         .reviews(list)
                         .build();

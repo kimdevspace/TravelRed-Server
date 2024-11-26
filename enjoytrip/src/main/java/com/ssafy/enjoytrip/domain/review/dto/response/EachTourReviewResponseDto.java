@@ -17,6 +17,7 @@ public class EachTourReviewResponseDto {
     private String backgroundImage;
     private String address;
     private String zipCode;
+    private String tourName;
     
     private Long tourId;
     private String description;
