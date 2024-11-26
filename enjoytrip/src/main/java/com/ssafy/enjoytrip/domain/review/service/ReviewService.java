@@ -66,7 +66,7 @@ public class ReviewService {
 
     }
 
-    public ReviewResponseDto getReview(Long tourId) {
+    public EachTourReviewResponseDto getReviewWithTour(Long tourId) {
         Tour tour = tourRepository.findTourById(tourId);
         List<ReviewSummaryDto> list = new ArrayList<>();
 
@@ -83,13 +83,16 @@ public class ReviewService {
             list.add(summaryDto);
         }
 
-        ReviewResponseDto reviewResponseDto = ReviewResponseDto.builder()
+        EachTourReviewResponseDto responseDto = EachTourReviewResponseDto.builder()
                         .tourId(tourId)
+                        .backgroundImage(tour.getBackgroundImage())
+                        .address(tour.getAddress())
+                        .zipCode(tour.getZipCode())
                         .description(tour.getTourDetail().getDescription())
                         .reviews(list)
                         .build();
 
-        return reviewResponseDto;
+        return responseDto;
     }
 
     public ReviewDetailResponseDto getReviewDetail(Long reviewId) {

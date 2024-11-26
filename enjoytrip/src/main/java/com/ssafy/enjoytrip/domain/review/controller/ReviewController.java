@@ -44,8 +44,8 @@ public class ReviewController {
     }
 
     @GetMapping("/{tourId}")
-    public ResponseEntity<?> getReview(@PathVariable Long tourId) {
-        ReviewResponseDto reviewResponseDto = reviewService.getReview(tourId);
+    public ResponseEntity<?> getReviewWithTour(@PathVariable Long tourId) {
+        EachTourReviewResponseDto reviewResponseDto = reviewService.getReviewWithTour(tourId);
         return ResponseEntity.ok(reviewResponseDto);
     }
 
