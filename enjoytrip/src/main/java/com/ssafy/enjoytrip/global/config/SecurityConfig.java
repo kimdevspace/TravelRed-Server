@@ -51,7 +51,9 @@ public class SecurityConfig {
                                 "/api/v1/",
                                 "/api/v1/member/login",
                                 "/api/v1/member/create",
-                                "/api/v1/member/verify/**"
+                                "/api/v1/member/verify/**",
+                                "api/v1/member/find-password",
+                                "api/v1/member/confirm"
                         ).permitAll()
                         .requestMatchers("/api/v1/**").hasRole("USER")  // USER 권한 명시
                         .anyRequest().authenticated()
