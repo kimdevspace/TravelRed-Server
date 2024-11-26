@@ -23,11 +23,13 @@ public interface TourRepository  extends JpaRepository<Tour, Long> {
 
     @Query("SELECT new com.ssafy.enjoytrip.domain.plan.dto.response.TourInfoResponseDto(" +
             "t.id, t.tourName, t.address, t.backgroundImage, " +
-            "COALESCE(AVG(r.rating), 0), COUNT(DISTINCT r)) " +  // reviewRating → rating
+            "t.tourDetail.latitude, t.tourDetail.longitude, " +  // 콤마 추가
+            "COALESCE(AVG(r.rating), 0), COUNT(DISTINCT r)) " +
             "FROM Tour t " +
             "LEFT JOIN t.reviews r " +
             "WHERE t.city = :city " +
-            "GROUP BY t.id, t.tourName, t.address, t.backgroundImage")
+            "GROUP BY t.id, t.tourName, t.address, t.backgroundImage, " +  // tourDetail 관련 필드 추가
+            "t.tourDetail.latitude, t.tourDetail.longitude")  // GROUP BY 절에 누락된 필드 추가
     List<TourInfoResponseDto> findTourInfoByCity(@Param("city") City city);
 
     List<Tour> findAll();
