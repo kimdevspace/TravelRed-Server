@@ -16,8 +16,8 @@ public class ChatBot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bot_id")
-    private Long id;
+    @Column(name = "chat_id")
+    private Long chatId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
@@ -26,13 +26,13 @@ public class ChatBot {
     @Column(name = "user_request", length = 500)
     private String userRequest;
 
-    @Column(name = "bot_response", columnDefinition = "TEXT")
-    private String botResponse;
+    @Column(name = "ai_response", columnDefinition = "TEXT")
+    private String aiResponse;
 
     @Builder
-    public ChatBot(Member member, String userRequest, String botResponse) {
+    public ChatBot(Member member, String userRequest, String aiResponse) {
         this.member = member;
         this.userRequest = userRequest;
-        this.botResponse = botResponse;
+        this.aiResponse = aiResponse;
     }
 }

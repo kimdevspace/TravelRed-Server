@@ -26,7 +26,7 @@ public class Plan {
     @Column(name = "plan_title", nullable = false)
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -39,7 +39,7 @@ public class Plan {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_code")
     private City city;
 

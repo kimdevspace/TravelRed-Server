@@ -1,9 +1,9 @@
 package com.ssafy.enjoytrip.domain.plan.controller;
 
 import com.ssafy.enjoytrip.domain.member.entity.Member;
-import com.ssafy.enjoytrip.domain.plan.dto.reponse.CityInfoResponseDto;
-import com.ssafy.enjoytrip.domain.plan.dto.reponse.TourInfoResponseDto;
-import com.ssafy.enjoytrip.domain.plan.dto.reponse.TripPlanInfoResponseDto;
+import com.ssafy.enjoytrip.domain.plan.dto.response.CityInfoResponseDto;
+import com.ssafy.enjoytrip.domain.plan.dto.response.TourInfoResponseDto;
+import com.ssafy.enjoytrip.domain.plan.dto.response.TripPlanInfoResponseDto;
 import com.ssafy.enjoytrip.domain.plan.dto.request.CreatePlanRequestDto;
 import com.ssafy.enjoytrip.domain.plan.service.PlanService;
 import com.ssafy.enjoytrip.global.security.SecurityUser;

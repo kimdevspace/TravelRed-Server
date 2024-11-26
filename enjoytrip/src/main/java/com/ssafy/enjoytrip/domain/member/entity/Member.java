@@ -37,12 +37,12 @@ public class Member {
 
     private String profileImage;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_code", insertable = false, updatable = false)
     @OnDelete(action = OnDeleteAction.SET_NULL) // 삭제되면 null로 변경
     private City city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
             @JoinColumn(name = "town_code", referencedColumnName = "town_code"),
             @JoinColumn(name = "city_code", referencedColumnName = "city_code")

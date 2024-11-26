@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.domain.review.entity.repository;
 
 import com.ssafy.enjoytrip.domain.review.dto.response.HomeReviewResponseDto;
+import com.ssafy.enjoytrip.domain.review.dto.response.SearchReviewResponseDto;
 import com.ssafy.enjoytrip.domain.review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,6 +32,22 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     void deleteAllByReviewIdIn(List<Long> ids);
 
+    @Query("SELECT new com.ssafy.enjoytrip.domain.review.dto.response.SearchReviewResponseDto(" +
+            "r.reviewId, " +           // 1
+            "r.reviewTitle, " +        // 2
+            "r.reviewContent, " +      // 3
+            "r.reviewImage, " +        // 4
+            "r.rating, " +            // 5
+            "r.likeCount, " +         // 6
+            "r.updatedAt, " +         // 7
+            "m.id, " +                // 8
+            "m.profileImage, " +      // 9
+            "m.nickname) " +          // 10
+            "FROM Review r " +
+            "JOIN r.member m " +
+            "ORDER BY r.updatedAt DESC")
+    List<SearchReviewResponseDto> findAllReviewsWithMamberInfo();
+
     Long countByMemberId(Long memberId);
     List<Review> findByMemberId(Long memberId);
 
@@ -39,4 +56,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "JOIN ReviewLike rl ON r.id = rl.review.id " +
             "WHERE rl.member.id = :memberId")
     List<Review> findLikedReviewsByMemberId(@Param("memberId") Long memberId);
+
 }

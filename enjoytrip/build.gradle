@@ -22,6 +22,12 @@ configurations {
 repositories {
 	mavenCentral()
 	jcenter()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+ext {
+	set('springAiVersion', "0.8.1")  // Spring AI 버전
 }
 
 dependencies {
@@ -52,6 +58,14 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+	}
 }
 
 tasks.named('test') {
